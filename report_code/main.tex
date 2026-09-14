@@ -1,9 +1,9 @@
-\documentclass[12pt,a4paper]{report}
+\documentclass[12pt,a4paper,oneside]{report}
 
 %--------------------------------------------------------------------
 % PAGE GEOMETRY
 %--------------------------------------------------------------------
-\usepackage[a4paper, top=1in, bottom=1in, left=1.25in, right=1in]{geometry}
+\usepackage[a4paper, top=1in, bottom=1in, left=1.25in, right=1in, headheight=15pt, headsep=15pt, footskip=25pt]{geometry}
 
 %--------------------------------------------------------------------
 % FONT: Times New Roman equivalent
@@ -75,25 +75,31 @@
 %--------------------------------------------------------------------
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small\textit{College of Engineering, Cherthala}}
+\fancyhead[L]{\small College of Engineering, Cherthala}
+\fancyhead[LO,LE]{\small College of Engineering, Cherthala}
 \fancyfoot[L]{\small Department of Computer Science and Engineering}
+\fancyfoot[LO,LE]{\small Department of Computer Science and Engineering}
 \fancyfoot[R]{\small\thepage}
+\fancyfoot[RO,RE]{\small\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0pt}
 
-% Plain style used by chapter-opening pages
+% Default plain style in front matter (centered roman page numbers, no header, no rule)
 \fancypagestyle{plain}{
   \fancyhf{}
-  \fancyfoot[L]{\small Department of Computer Science and Engineering}
-  \fancyfoot[R]{\small\thepage}
+  \fancyfoot[C]{\small\thepage}
+  \fancyfoot[CO,CE]{\small\thepage}
   \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
 }
 
-% Front-matter style (roman page numbers, centred)
+% Front-matter style (centered roman page numbers, no header, no rule)
 \fancypagestyle{frontmatter}{
   \fancyhf{}
   \fancyfoot[C]{\small\thepage}
+  \fancyfoot[CO,CE]{\small\thepage}
   \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
 }
 
 \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
@@ -125,9 +131,9 @@
 {\Large\bfseries Using Explainable AI}\\[0.7cm]
 
 {\normalsize\itshape Submitted By}\\[0.25cm]
-{\normalsize\bfseries ANANDHAKRISHNAN S \quad (CEC23CS033)}\\[0.1cm]
-{\normalsize\bfseries ARAVIND A KAMATH \quad\; (CEC23CS041)}\\[0.1cm]
-{\normalsize\bfseries ARJUN MANOJ \qquad\qquad (CEC23CS043)}\\[0.1cm]
+{\normalsize\bfseries ANANDHAKRISHNAN S (CEC23CS033)}\\[0.1cm]
+{\normalsize\bfseries ARAVIND A KAMATH (CEC23CS041)}\\[0.1cm]
+{\normalsize\bfseries ARJUN MANOJ (CEC23CS043)}\\[0.1cm]
 {\normalsize\bfseries SANGEETH KRISHNAN S (CEC23CS105)}\\[0.6cm]
 
 {\normalsize\itshape under the esteemed guidance of}\\[0.2cm]
@@ -161,9 +167,9 @@
 {\Large\bfseries Using Explainable AI}\\[0.7cm]
 
 {\normalsize\itshape Submitted By}\\[0.25cm]
-{\normalsize\bfseries ANANDHAKRISHNAN S \quad (CEC23CS033)}\\[0.1cm]
-{\normalsize\bfseries ARAVIND A KAMATH \quad\; (CEC23CS041)}\\[0.1cm]
-{\normalsize\bfseries ARJUN MANOJ \qquad\qquad (CEC23CS043)}\\[0.1cm]
+{\normalsize\bfseries ANANDHAKRISHNAN S (CEC23CS033)}\\[0.1cm]
+{\normalsize\bfseries ARAVIND A KAMATH (CEC23CS041)}\\[0.1cm]
+{\normalsize\bfseries ARJUN MANOJ (CEC23CS043)}\\[0.1cm]
 {\normalsize\bfseries SANGEETH KRISHNAN S (CEC23CS105)}\\[0.5cm]
 
 {\normalsize\itshape under the esteemed guidance of}\\[0.2cm]
@@ -191,9 +197,6 @@
 % CERTIFICATE
 % ===================================================================
 \clearpage
-\pagestyle{frontmatter}
-\pagenumbering{roman}
-\setcounter{page}{1}
 \thispagestyle{empty}
 
 \begin{center}
@@ -228,7 +231,9 @@ B.\,Tech. Computer Science and Engineering of APJ Abdul Kalam Technological Univ
 % ACKNOWLEDGEMENT
 % ===================================================================
 \clearpage
-\thispagestyle{frontmatter}
+\pagestyle{frontmatter}
+\pagenumbering{roman}
+\setcounter{page}{1}
 
 \begin{center}
 {\Large\bfseries ACKNOWLEDGEMENT}
@@ -252,9 +257,6 @@ We would like to thank our dear friends for extending their cooperation and enco
 throughout the project work, without which we would never have completed the project this
 well. Thank you all for your love and also for being very understanding.
 
-\vspace*{\fill}
-\begin{flushright}\small i\end{flushright}
-
 % ===================================================================
 % ABSTRACT
 % ===================================================================
@@ -266,36 +268,7 @@ well. Thank you all for your love and also for being very understanding.
 \end{center}
 \vspace{0.5cm}
 
-The rapid proliferation of fake news and misinformation across social media and digital
-platforms has emerged as a critical societal challenge. Fabricated news heavily influences
-democratic elections, promotes harmful medical myths and incites communal unrest.
-Existing automated detection systems achieve high statistical accuracy but function as
-opaque black boxes, producing verdicts without any explanation of the reasoning behind
-them. This absence of transparency limits institutional credibility and prevents everyday
-users and journalists from trusting automated classifications.
-
-This project proposes \textbf{Ledger}, an AI-powered web application for real-time fake
-news detection accompanied by transparent, word-level reasoning. The core classification
-engine uses \textbf{FastText} subword embeddings to capture semantic meaning and
-handle out-of-vocabulary terms, typos and internet slang. A \textbf{1D Convolutional
-Neural Network (CNN)} extracts localized n-gram features, which are passed into a
-\textbf{Long Short-Term Memory (LSTM)} network that models sequential contextual
-dependencies across the article. To address the black-box limitation, the system
-integrates Explainable AI using \textbf{LIME} (Local Interpretable Model-agnostic
-Explanations), visually highlighting the specific words that drove the Real or Fake
-verdict together with calibrated confidence scores.
-
-The selected base paper, \textit{Advancing Fake News Detection: Hybrid Deep Learning With
-FastText and Explainable AI} (Hashmi et al., IEEE Access, 2024), establishes the
-high performance of FastText-CNN-LSTM architectures, achieving up to 99\,\% accuracy
-on the WELFake benchmark. The proposed implementation connects a Python
-\textbf{FastAPI} backend for low-latency model serving to a responsive
-\textbf{React.js} frontend dashboard. This report presents the proposed system design
-and a comprehensive literature survey; it does not claim completed deployment or
-measured project performance.
-
-\vspace*{\fill}
-\begin{flushright}\small i\end{flushright}
+The rapid proliferation of fake news and misinformation across social media and digital platforms has emerged as a critical societal challenge, distorting democratic elections, propagating harmful medical myths and inciting communal unrest. While existing automated detection systems achieve high predictive accuracy, they predominantly operate as opaque black boxes that yield classifications without explaining the underlying reasoning, thereby undermining user trust and institutional credibility. To address these critical limitations, this project proposes \textbf{Ledger}, an Explainable AI-assisted web application for real-time fake news verification. The core classification architecture integrates \textbf{FastText} subword embeddings to robustly capture semantic representations while effectively handling out-of-vocabulary terms, informal internet slang and typographical errors. A \textbf{1D Convolutional Neural Network (CNN)} extracts salient local n-gram features and deceptive syntactic patterns, which are sequentially processed by a \textbf{Long Short-Term Memory (LSTM)} network to model long-range contextual dependencies across the text. To overcome black-box opacity, the system incorporates \textbf{LIME} (Local Interpretable Model-agnostic Explanations) to generate word-level attribution heatmaps that visually explain individual veracity decisions alongside calibrated confidence scores. Grounded in the methodology of the base paper, \textit{Advancing Fake News Detection: Hybrid Deep Learning With FastText and Explainable AI} (Hashmi et al., IEEE Access, 2024), the proposed implementation pairs a high-performance Python \textbf{FastAPI} backend for sub-second inference with an interactive \textbf{React.js} web dashboard. This Phase~I report details the problem formulation, a comprehensive literature survey and the architectural system design diagrams without claiming completed deployment or measured project performance.
 
 % ===================================================================
 % TABLE OF CONTENTS
@@ -311,12 +284,37 @@ measured project performance.
 % MAIN MATTER
 % ===================================================================
 \clearpage
-\pagestyle{fancy}
 \pagenumbering{arabic}
 \setcounter{page}{1}
 
+% Global fancy style for all body pages
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small College of Engineering, Cherthala}
+\fancyhead[LO,LE]{\small College of Engineering, Cherthala}
+\fancyfoot[L]{\small Department of Computer Science and Engineering}
+\fancyfoot[LO,LE]{\small Department of Computer Science and Engineering}
+\fancyfoot[R]{\small\thepage}
+\fancyfoot[RO,RE]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Redefine plain style so chapter-opening pages also have the exact same header and footer
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyhead[L]{\small College of Engineering, Cherthala}
+  \fancyhead[LO,LE]{\small College of Engineering, Cherthala}
+  \fancyfoot[L]{\small Department of Computer Science and Engineering}
+  \fancyfoot[LO,LE]{\small Department of Computer Science and Engineering}
+  \fancyfoot[R]{\small\thepage}
+  \fancyfoot[RO,RE]{\small\thepage}
+  \renewcommand{\headrulewidth}{0.4pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
 %====================================================================
 \chapter{INTRODUCTION}
+\thispagestyle{fancy}
 %====================================================================
 
 Digital platforms and social media networks have become the primary sources of news
@@ -366,6 +364,7 @@ verification assistant.
 
 %====================================================================
 \chapter{PROBLEM STATEMENT}
+\thispagestyle{fancy}
 %====================================================================
 
 \section{Problem Statement}
@@ -423,6 +422,7 @@ clear, word-level justifications.
 
 %====================================================================
 \chapter{LITERATURE SURVEY}
+\thispagestyle{fancy}
 %====================================================================
 
 The literature survey examines the selected base paper and ten complementary research
@@ -651,6 +651,7 @@ design choices adopted in the Ledger platform.
 
 %====================================================================
 \chapter{SYSTEM DESIGN}
+\thispagestyle{fancy}
 %====================================================================
 
 System design serves as the blueprint for translating functional requirements and
