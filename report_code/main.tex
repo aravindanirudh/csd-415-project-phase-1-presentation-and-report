@@ -76,19 +76,16 @@
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[L]{\small College of Engineering, Cherthala}
-\fancyhead[LO,LE]{\small College of Engineering, Cherthala}
+\fancyhead[R]{\small\nouppercase{\leftmark}}
 \fancyfoot[L]{\small Department of Computer Science and Engineering}
-\fancyfoot[LO,LE]{\small Department of Computer Science and Engineering}
 \fancyfoot[R]{\small\thepage}
-\fancyfoot[RO,RE]{\small\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\footrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
 
 % Default plain style in front matter (centered roman page numbers, no header, no rule)
 \fancypagestyle{plain}{
   \fancyhf{}
   \fancyfoot[C]{\small\thepage}
-  \fancyfoot[CO,CE]{\small\thepage}
   \renewcommand{\headrulewidth}{0pt}
   \renewcommand{\footrulewidth}{0pt}
 }
@@ -97,7 +94,6 @@
 \fancypagestyle{frontmatter}{
   \fancyhf{}
   \fancyfoot[C]{\small\thepage}
-  \fancyfoot[CO,CE]{\small\thepage}
   \renewcommand{\headrulewidth}{0pt}
   \renewcommand{\footrulewidth}{0pt}
 }
@@ -291,30 +287,22 @@ The rapid proliferation of fake news and misinformation across social media and 
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[L]{\small College of Engineering, Cherthala}
-\fancyhead[LO,LE]{\small College of Engineering, Cherthala}
+\fancyhead[R]{\small\nouppercase{\leftmark}}
 \fancyfoot[L]{\small Department of Computer Science and Engineering}
-\fancyfoot[LO,LE]{\small Department of Computer Science and Engineering}
 \fancyfoot[R]{\small\thepage}
-\fancyfoot[RO,RE]{\small\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\footrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
 
-% Redefine plain style so chapter-opening pages also have the exact same header and footer
+% Plain style for chapter starting pages (just page number centered, no header, no footer text/rule)
 \fancypagestyle{plain}{
   \fancyhf{}
-  \fancyhead[L]{\small College of Engineering, Cherthala}
-  \fancyhead[LO,LE]{\small College of Engineering, Cherthala}
-  \fancyfoot[L]{\small Department of Computer Science and Engineering}
-  \fancyfoot[LO,LE]{\small Department of Computer Science and Engineering}
-  \fancyfoot[R]{\small\thepage}
-  \fancyfoot[RO,RE]{\small\thepage}
-  \renewcommand{\headrulewidth}{0.4pt}
+  \fancyfoot[C]{\small\thepage}
+  \renewcommand{\headrulewidth}{0pt}
   \renewcommand{\footrulewidth}{0pt}
 }
 
 %====================================================================
 \chapter{INTRODUCTION}
-\thispagestyle{fancy}
 %====================================================================
 
 Digital platforms and social media networks have become the primary sources of news
@@ -364,7 +352,6 @@ verification assistant.
 
 %====================================================================
 \chapter{PROBLEM STATEMENT}
-\thispagestyle{fancy}
 %====================================================================
 
 \section{Problem Statement}
@@ -422,7 +409,6 @@ clear, word-level justifications.
 
 %====================================================================
 \chapter{LITERATURE SURVEY}
-\thispagestyle{fancy}
 %====================================================================
 
 The literature survey examines the selected base paper and ten complementary research
@@ -651,7 +637,6 @@ design choices adopted in the Ledger platform.
 
 %====================================================================
 \chapter{SYSTEM DESIGN}
-\thispagestyle{fancy}
 %====================================================================
 
 System design serves as the blueprint for translating functional requirements and
@@ -794,7 +779,6 @@ with a clear authenticity verdict and an interactive highlighted textual explana
 \chapter*{REFERENCES}
 \addcontentsline{toc}{chapter}{REFERENCES}
 \markboth{REFERENCES}{REFERENCES}
-\thispagestyle{fancy}
 
 \begin{enumerate}[label=\arabic*., leftmargin=*, itemsep=6pt]
 
