@@ -280,6 +280,8 @@ The rapid proliferation of fake news and misinformation across social media and 
 % MAIN MATTER
 % ===================================================================
 \clearpage
+\newgeometry{top=1in, bottom=1.4in, left=1.25in, right=1in, headheight=15pt, headsep=20pt, footskip=48pt}
+\raggedbottom
 \pagenumbering{arabic}
 \setcounter{page}{1}
 
@@ -675,7 +677,7 @@ weights to explain the classification verdict.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[height=0.48\textheight,keepaspectratio]{ArchitectureDiagram.drawio.png}
+  \includegraphics[height=0.62\textheight,keepaspectratio]{ArchitectureDiagram.drawio.png}
   \caption{System Architecture Diagram}
   \label{fig:architecture}
 \end{figure}
@@ -700,7 +702,7 @@ to allow the engineer to monitor model reliability.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.92\textwidth,keepaspectratio]{DFD_0.drawio.png}
+  \includegraphics[width=\textwidth,keepaspectratio]{DFD_0.drawio.png}
   \caption{Data Flow Diagram: Level 0 (Context Diagram)}
   \label{fig:dfd0}
 \end{figure}
@@ -734,7 +736,7 @@ the user interface.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.92\textwidth,keepaspectratio]{DFD_1.drawio.png}
+  \includegraphics[width=\textwidth,keepaspectratio]{DFD_1.drawio.png}
   \caption{Data Flow Diagram: Level 1}
   \label{fig:dfd1}
 \end{figure}
@@ -766,10 +768,12 @@ interface parses the payload and dynamically updates the dashboard, presenting t
 with a clear authenticity verdict and an interactive highlighted textual explanation.
 
 \begin{figure}[H]
-  \centering
-  \includegraphics[width=0.95\textwidth,keepaspectratio]{uml_sequence_diagram.png}
-  \caption{UML Sequence Diagram}
-  \label{fig:sequence}
+    \centering
+    \makebox[\textwidth][c]{%
+        \includegraphics[width=1.17\textwidth]{uml_sequence_diagram.png}%
+      }
+    \caption{UML Sequence Diagram}
+    \label{fig:sequence}
 \end{figure}
 
 %====================================================================
