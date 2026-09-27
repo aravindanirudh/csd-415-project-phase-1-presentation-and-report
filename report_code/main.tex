@@ -242,12 +242,8 @@ resource and ability to complete our project successfully.
 
 We would like to thank \textbf{Dr. Jaya V.L}, our Principal, who has provided us with
 the best facilities and atmosphere for the project completion and presentation.
-We would also like to thank our HOD \textbf{Dr. Preetha Theresa Joy} (Professor,
-Department of Computer Science and Engineering), our Project Co-ordinator
-\textbf{Mrs. Rakhi R} (Assistant Professor, Department of Computer Science and Engineering)
-and our guide \textbf{Mrs. Rajeswary R} (Assistant Professor, Department of Computer Science
-and Engineering) for the help extended and also for the encouragement and support given
-to us while doing the project.
+We would also like to thank our HOD \textbf{Dr. Preetha Theresa Joy}, Professor, Department of Computer Science and Engineering, our Project Co-ordinators
+\textbf{Mrs. Rakhi R}, Assistant Professor, Department of Computer Science and Engineering, \textbf{Dr. Shyama Das}, Professor, Department of Computer Science and Engineering and our guide \textbf{Mrs. Rajeswary R}, Assistant Professor, Department of Computer Science and Engineering for the help extended and also for the encouragement and support given to us while doing the project.
 
 We would like to thank our dear friends for extending their cooperation and encouragement
 throughout the project work, without which we would never have completed the project this
@@ -264,7 +260,7 @@ well. Thank you all for your love and also for being very understanding.
 \end{center}
 \vspace{0.5cm}
 
-The rapid proliferation of fake news and misinformation across social media and digital platforms has emerged as a critical societal challenge, distorting democratic elections, propagating harmful medical myths and inciting communal unrest. While existing automated detection systems achieve high predictive accuracy, they predominantly operate as opaque black boxes that yield classifications without explaining the underlying reasoning, thereby undermining user trust and institutional credibility. To address these critical limitations, this project proposes \textbf{Ledger}, an Explainable AI-assisted web application for real-time fake news verification. The core classification architecture integrates \textbf{FastText} subword embeddings to robustly capture semantic representations while effectively handling out-of-vocabulary terms, informal internet slang and typographical errors. A \textbf{1D Convolutional Neural Network (CNN)} extracts salient local n-gram features and deceptive syntactic patterns, which are sequentially processed by a \textbf{Long Short-Term Memory (LSTM)} network to model long-range contextual dependencies across the text. To overcome black-box opacity, the system incorporates \textbf{LIME} (Local Interpretable Model-agnostic Explanations) to generate word-level attribution heatmaps that visually explain individual veracity decisions alongside calibrated confidence scores. Grounded in the methodology of the base paper, \textit{Advancing Fake News Detection: Hybrid Deep Learning With FastText and Explainable AI} (Hashmi et al., IEEE Access, 2024), the proposed implementation pairs a high-performance Python \textbf{FastAPI} backend for sub-second inference with an interactive \textbf{React.js} web dashboard. This Phase~I report details the problem formulation, a comprehensive literature survey and the architectural system design diagrams without claiming completed deployment or measured project performance.
+The rapid proliferation of fake news and misinformation across social media and digital platforms has emerged as a critical societal challenge, distorting democratic elections, propagating harmful medical myths and inciting communal unrest. While existing automated detection systems achieve high predictive accuracy, they predominantly operate as opaque black boxes that yield classifications without explaining the underlying reasoning, thereby undermining user trust and institutional credibility. To address these critical limitations, this project proposes \textbf{Ledger}, an Explainable AI-assisted web application for real-time fake news verification. The core classification architecture integrates \textbf{FastText} subword embeddings to robustly capture semantic representations while effectively handling out-of-vocabulary terms, informal internet slang and typographical errors. A \textbf{1D Convolutional Neural Network (CNN)} extracts salient local n-gram features and deceptive syntactic patterns, which are sequentially processed by a \textbf{Long Short-Term Memory (LSTM)} network to model long-range contextual dependencies across the text. To overcome black-box opacity, the system incorporates \textbf{LIME} (Local Interpretable Model-agnostic Explanations) to generate word-level attribution heatmaps that visually explain individual veracity decisions alongside calibrated confidence scores. Grounded in the methodology of the base paper, \textit{Advancing Fake News Detection: Hybrid Deep Learning With FastText and Explainable AI} (Hashmi et al., IEEE Access, 2024), the proposed implementation pairs a high-performance Python \textbf{FastAPI} backend for sub-second inference with an interactive \textbf{React.js} web dashboard. This Phase~I report details the problem formulation, a comprehensive literature survey, the proposed system, feasibility study, software requirements specification and the architectural system design diagrams without claiming completed deployment or measured project performance.
 
 % ===================================================================
 % TABLE OF CONTENTS
@@ -638,15 +634,319 @@ design choices adopted in the Ledger platform.
 \end{itemize}
 
 %====================================================================
+\chapter{PROPOSED SYSTEM}
+%====================================================================
+
+The proposed system, \textbf{Ledger}, is an Explainable AI-assisted web application designed
+to automate fake news verification with high classification accuracy, low inference latency
+and transparent decision interpretability. Traditional automated detection models predominantly
+function as black boxes that yield classifications without explaining why an article was flagged,
+limiting user credibility and public trust. Furthermore, existing Transformer-based language
+models demand substantial GPU resources that are impractical for lightweight, sub-second web
+deployments. Ledger addresses these challenges by combining subword semantic embeddings, a
+hybrid deep-learning classifier and local explanation heatmaps into a unified platform.
+
+\section{Proposed Solution}
+
+Ledger operates as a standalone, text-based verification tool that evaluates news articles
+and headlines based entirely on textual and linguistic characteristics. This eliminates
+dependencies on external social media networks, retweet graphs or user engagement histories,
+enabling the system to verify newly published standalone content immediately.
+
+The core architecture combines FastText subword n-gram embeddings with a hybrid neural network
+composed of a 1D Convolutional Neural Network (CNN) and a Long Short-Term Memory (LSTM) network.
+FastText subword embeddings represent tokens as 300-dimensional dense vectors derived from
+character n-grams. This enables the model to capture morphological subtleties and effectively
+resolve out-of-vocabulary terms, typographical errors, informal internet slang and deliberate
+adversarial spelling variations.
+
+The 1D-CNN layer employs parallel convolutional filters with varying kernel sizes to detect
+salient local n-gram features and deceptive syntactic structures within the text. The extracted
+feature representations are sequentially processed by the LSTM network, which captures
+long-range contextual dependencies and preserves semantic coherence across complete paragraphs.
+A dense Softmax layer computes class probabilities to output a binary veracity verdict (Real or
+Fake) alongside a calibrated confidence score.
+
+To ensure decision transparency, the system integrates Local Interpretable Model-agnostic
+Explanations (LIME). When a prediction is generated, LIME creates localized perturbations of the
+input text and fits an interpretable linear surrogate model. This computes token-level attribution
+weights that visually highlight influential words within the user interface, distinguishing between
+words supporting authenticity and those indicating deception.
+
+The primary capabilities of the proposed Ledger system are summarized below:
+
+\begin{enumerate}[label=\arabic*., leftmargin=*, itemsep=2pt]
+  \item \textbf{Real-Time Text Verification:} A streamlined web platform allowing users to paste
+        news text or headlines and obtain sub-second authenticity verdicts.
+  \item \textbf{Subword Semantic Representation:} FastText character-level embeddings resolve
+        spelling mistakes, emerging digital slang and unknown vocabulary without information loss.
+  \item \textbf{Dual-Stage Hybrid Neural Learning:} 1D-CNN captures localized deceptive phrase
+        patterns while LSTM preserves long-range semantic context across the article.
+  \item \textbf{Explainable AI and Transparency:} LIME generates word-level attribution scores,
+        providing visual heatmaps that explain why a specific verdict was reached.
+  \item \textbf{Independent Text-Only Verification:} Classifies articles without requiring external
+        social-media propagation trees, comment histories or user engagement metadata.
+  \item \textbf{Lightweight and Cost-Effective Deployment:} Operates on commodity CPU hardware
+        without requiring expensive GPU servers, ensuring economical scalability.
+  \item \textbf{Interactive User Dashboard:} Displays the classification label, numerical
+        confidence percentage and an interactive word-attribution heatmap.
+\end{enumerate}
+
+\section{Methodology and Workflow}
+
+The end-to-end verification methodology comprises seven sequential stages:
+
+\begin{enumerate}[label=\arabic*., leftmargin=*, itemsep=2pt]
+  \item \textbf{Input Stage:} The user accesses the web dashboard and submits unverified news
+        text or a headline through the input form.
+  \item \textbf{Text Preprocessing and Cleaning:} The backend cleans the input string by
+        stripping HTML tags, removing non-alphanumeric noise, normalizing whitespace and
+        applying lemmatization and tokenization.
+  \item \textbf{Subword Embedding Generation:} Preprocessed tokens are mapped into 300-dimensional
+        dense vectors using pre-trained FastText subword models.
+  \item \textbf{Feature Extraction (CNN):} Parallel 1D-CNN filters extract salient n-gram phrases
+        and deceptive syntactic indicators.
+  \item \textbf{Sequential Context Modeling (LSTM):} Recurrent LSTM memory cells capture
+        long-range sequential dependencies across the feature sequence.
+  \item \textbf{Veracity Classification:} A dense layer with Softmax activation produces the
+        binary prediction label (Real or Fake) with a calibrated confidence percentage.
+  \item \textbf{Explanation and Visualization (LIME):} The LIME explainer computes token-level
+        attribution weights and the web interface renders color-coded word highlights alongside
+        the final prediction verdict.
+\end{enumerate}
+
+%====================================================================
+\chapter{FEASIBILITY STUDY}
+%====================================================================
+
+The objective of this feasibility study is to evaluate whether the proposed fake news detection
+system can be successfully developed, implemented and deployed within practical resource
+constraints. The assessment examines technical, operational and economic dimensions to ensure
+system practicality and viability.
+
+\section{Technical Feasibility}
+
+The proposed system is technically feasible as it leverages well-established, industry-standard
+technologies and open-source frameworks. The machine learning pipeline is built with Python,
+utilizing FastText for subword embeddings, PyTorch or TensorFlow for the hybrid CNN-LSTM neural
+network and the official LIME library for post-hoc interpretability.
+
+Unlike heavy Transformer architectures such as BERT or RoBERTa that require multi-gigabyte GPU
+memory and complex tensor parallelization, the FastText + 1D-CNN + LSTM pipeline is computationally
+compact. Model inference and localized LIME perturbation require minimal processing overhead and
+can execute comfortably on standard multicore x86-64 CPUs with sub-second response times.
+
+The application architecture decouples the frontend client from the backend inference service
+using a RESTful API built on Python FastAPI and Uvicorn. This asynchronous architecture ensures
+rapid request routing and predictable resource consumption. The technical viability of the hybrid
+deep-learning approach is strongly substantiated by the base paper (Hashmi et al., 2024), which
+demonstrated up to 99\,\% accuracy on the WELFake dataset and 97\,\% on FakeNewsNet.
+
+\section{Operational Feasibility}
+
+Ledger is operationally feasible as it addresses the practical operational requirements of
+everyday news readers, journalists and professional fact-checkers. Traditional detection tools
+often encounter resistance because opaque black-box verdicts fail to provide actionable justifications.
+By delivering word-level attribution heatmaps, Ledger enables users to immediately evaluate the
+linguistic evidence supporting a prediction, establishing institutional trust and credibility.
+
+From an end-user standpoint, the system requires no specialized technical expertise. Users simply
+paste text into a web browser and receive an immediate verdict accompanied by intuitive color-coded
+word highlights. The application operates as a self-contained service that does not impose complex
+installation steps or configuration burdens on users. Furthermore, because Ledger performs
+text-only verification without relying on external social media graphs, it remains fully operational
+for newly written or unshared articles.
+
+\section{Economic Feasibility}
+
+The development, deployment and maintenance of the Ledger platform are highly cost-effective.
+The entire software stack is constructed from open-source technologies, including Python,
+FastAPI, React.js, FastText, PyTorch and LIME, incurring zero proprietary licensing expenditures.
+
+Public benchmark datasets utilized for model training and evaluation, including WELFake,
+FakeNewsNet and LIAR, are openly accessible for academic and development purposes. Furthermore,
+the lightweight computational footprint of the FastText + CNN-LSTM architecture eliminates the
+requirement for dedicated, high-cost cloud GPU instances during inference. The system can be hosted
+on standard commodity virtual servers, keeping recurring operational and hosting costs to an
+absolute minimum while delivering dependable verification services.
+
+%====================================================================
+\chapter{SOFTWARE REQUIREMENTS SPECIFICATION}
+%====================================================================
+
+The Software Requirements Specification (SRS) establishes the complete functional and
+non-functional requirements governing the design, implementation and deployment of the Ledger
+fake news detection system.
+
+\section{Overall Description}
+
+\subsection{Project Perspective}
+
+Ledger is a self-contained, web-based fake news verification system built on a client-server
+architecture. The system integrates an interactive frontend interface with a high-performance
+backend machine-learning server. The React.js frontend provides the user interface for text input
+and visualizes verification results alongside explanation heatmaps. The Python FastAPI backend
+orchestrates text cleaning, vector embedding lookup, deep-learning inference and LIME feature
+attribution. The entire architecture operates independently of external social-network platforms,
+functioning as a standalone text evaluation service.
+
+\subsection{Project Functions}
+
+The core functions provided by the Ledger system include:
+
+\begin{itemize}[leftmargin=*, itemsep=2pt]
+  \item Accepting arbitrary news headlines and article passages through a responsive web interface.
+  \item Preprocessing input text through regex cleaning, lowercasing, lemmatization and tokenization.
+  \item Converting tokens into 300-dimensional FastText subword embeddings to handle typos and slang.
+  \item Classifying text as Real or Fake using a hybrid 1D-CNN and LSTM deep-learning model.
+  \item Calculating calibrated confidence percentages for the classification verdict.
+  \item Performing word-level attribution using LIME to quantify the contribution of individual tokens.
+  \item Displaying an interactive color-coded explanation heatmap in the client web dashboard.
+  \item Providing a high-throughput REST API endpoint for automated and programmatic verification.
+\end{itemize}
+
+\section{User Classes and Characteristics}
+
+The system identifies three primary user classes:
+
+\begin{itemize}[leftmargin=*, itemsep=2pt]
+  \item \textbf{General Public and News Consumers:} Require an accessible, intuitive interface to
+        verify suspicious headlines or social-media posts without needing technical background.
+  \item \textbf{Journalists and Fact-Checkers:} Require rapid veracity screening and transparent
+        word-level evidence to assist professional verification workflows.
+  \item \textbf{System Administrators and Researchers:} Manage model deployment, evaluate
+        classification performance metrics and maintain server operations.
+\end{itemize}
+
+\subsection{Operating Environment}
+
+\begin{itemize}[leftmargin=*, itemsep=2pt]
+  \item \textbf{Client Environment:} Any modern web browser including Google Chrome, Mozilla
+        Firefox, Apple Safari and Microsoft Edge running on desktop, laptop or mobile devices.
+  \item \textbf{Server Operating System:} Linux (Ubuntu 22.04 LTS or higher) or Windows 10/11
+        64-bit operating system.
+  \item \textbf{Server Runtime Environment:} Python 3.10 or higher with Uvicorn ASGI server and
+        Node.js version 18 or higher for frontend asset management.
+  \item \textbf{Hardware Environment:} Commodity x86-64 host with a minimum of 4 CPU cores, 8\,GB
+        RAM and 20\,GB available storage space.
+\end{itemize}
+
+\subsection{Design and Implementation Constraints}
+
+\begin{itemize}[leftmargin=*, itemsep=2pt]
+  \item \textbf{Programming Languages and Frameworks:} The backend is developed in Python using
+        FastAPI, while the frontend dashboard is constructed with React.js.
+  \item \textbf{Model Complexity:} The hybrid CNN-LSTM neural network must remain computationally
+        compact to ensure inference and LIME perturbations execute efficiently on standard CPUs.
+  \item \textbf{Stateless Architecture:} The verification pipeline processes requests in-memory
+        without requiring mandatory persistent relational databases for user tracking.
+  \item \textbf{Network Dependency:} Client devices require standard HTTP/HTTPS connectivity to
+        communicate with the backend API.
+\end{itemize}
+
+\subsection{Assumptions and Dependencies}
+
+\begin{itemize}[leftmargin=*, itemsep=2pt]
+  \item Input articles are written primarily in the English language, matching the training domain
+        of the benchmark datasets.
+  \item Submitted articles provide sufficient textual content (headline or body excerpt) to allow
+        meaningful linguistic feature extraction.
+  \item Standard open-source libraries (FastText, LIME, FastAPI, PyTorch) remain supported and
+        available in the execution environment.
+\end{itemize}
+
+\section{External Interface Requirements}
+
+\subsection{User Interfaces}
+
+The web interface is designed to be clean, responsive and intuitive. It includes a multiline text
+submission field, an instant verification button with dynamic loading feedback, a verdict summary
+card showing the binary prediction badge (Real or Fake) with an associated confidence percentage bar
+and an interactive heatmap viewer that renders words with green (supporting real) or red
+(indicating fake) background highlights.
+
+\subsection{Hardware Interfaces}
+
+The system communicates over standard TCP/IP networking hardware (Ethernet or Wi-Fi). No
+specialized external hardware interfaces, proprietary sensors or GPU accelerators are mandatory for
+system operation.
+
+\subsection{Software Interfaces}
+
+The system uses a RESTful JSON API over HTTP/HTTPS for communication between the React.js client and
+the FastAPI backend. Incoming payloads are validated against Pydantic schemas. Model weights and
+pre-trained FastText subword matrices are loaded from disk storage into memory during server startup.
+
+\section{Non-functional Requirements}
+
+\begin{itemize}[leftmargin=*, itemsep=2pt]
+  \item \textbf{Performance:} Verification requests, including deep-learning classification and
+        LIME explanation generation, must complete within 2 seconds on standard server hardware.
+  \item \textbf{Usability:} The user interface must present clear verdicts and self-explanatory
+        visual highlights requiring no prior training or technical knowledge.
+  \item \textbf{Reliability:} The backend must handle invalid, empty or excessively long inputs
+        gracefully with descriptive HTTP error responses.
+  \item \textbf{Scalability:} The asynchronous ASGI server architecture must support concurrent
+        verification requests without memory leaks or request timeouts.
+  \item \textbf{Maintainability:} A modular directory structure cleanly separates frontend
+        components, REST API endpoints, preprocessing scripts and neural model modules.
+  \item \textbf{Security:} Input sanitization prevents cross-site scripting (XSS) and code
+        injection, while communication occurs over secure HTTPS channels.
+\end{itemize}
+
+%====================================================================
 \chapter{SYSTEM DESIGN}
 %====================================================================
 
 System design serves as the blueprint for translating functional requirements and
 theoretical concepts into an operational software architecture. This chapter presents
-the architectural and design diagrams for the Ledger fake news detection system. The
+the functional modules and design diagrams for the Ledger fake news detection system. The
 visual representations delineate the multi-tier system topology, the hierarchical
 movement of data through progressive processing abstractions and the chronological
 interaction lifecycle among distributed components.
+
+\section{Module}
+
+The Ledger fake news detection system is organized into six functional modules that
+collaborate to deliver end-to-end, interpretable verification:
+
+\begin{enumerate}[label=\arabic*., leftmargin=*, itemsep=4pt]
+  \item \textbf{User Interface Module (React.js Frontend):}
+        Provides an intuitive, responsive web dashboard where users input news headlines or
+        articles. It performs client-side validation, dispatches asynchronous verification
+        requests to the backend API and renders the output verdict badge, confidence percentage
+        and an interactive word-attribution heatmap.
+
+  \item \textbf{API Service and Orchestration Module (FastAPI Backend):}
+        Exposes high-performance RESTful API endpoints. Built with Python FastAPI and served
+        via Uvicorn, this module validates incoming request payloads, orchestrates data transfer
+        between preprocessing routines, model inference and explainability engines and formats
+        results into structured JSON payloads.
+
+  \item \textbf{Text Preprocessing and Normalization Module:}
+        Cleans and normalizes submitted text before representation learning. Operations include
+        regex-based stripping of HTML tags, punctuation normalization, conversion to lowercase,
+        tokenization and lemmatization to remove noise and standardize input tokens.
+
+  \item \textbf{Feature Extraction and Subword Embedding Module (FastText):}
+        Transforms preprocessed tokens into 300-dimensional dense vectors using character-level
+        n-gram subword embeddings. This module handles out-of-vocabulary terms, typographical
+        errors and informal social-media slang by constructing representations from constituent
+        character n-grams.
+
+  \item \textbf{Hybrid Neural Classification Module (1D-CNN and LSTM):}
+        Executes binary veracity classification over the embedding sequences. Multiple 1D-CNN
+        convolutional kernels extract localized n-gram syntax and deceptive phrase patterns,
+        followed by LSTM recurrent layers that capture long-range contextual dependencies across
+        the text. A final dense layer with Softmax activation generates class probabilities for
+        Real and Fake categories.
+
+  \item \textbf{Explainable AI Attribution Module (LIME):}
+        Generates post-hoc interpretability for each classification verdict. By systematically
+        perturbing input words and measuring prediction variances, LIME fits a localized linear
+        surrogate model to determine positive and negative attribution weights for individual
+        tokens, enabling visual keyword highlighting.
+\end{enumerate}
 
 \section{System Architecture}
 
@@ -682,66 +982,7 @@ weights to explain the classification verdict.
   \label{fig:architecture}
 \end{figure}
 
-\section{Data Flow Diagram Level 0}
-
-The Data Flow Diagram Level 0, also designated as the context diagram, defines the
-system boundary by illustrating the primary interactions between external entities
-and the Ledger system as a single unified process.
-
-Two principal external entities interact with the system: the User (or Fact-Checker)
-and the Machine Learning Engineer (or System Administrator). The user submits unverified
-news text or article headlines to the Ledger system. In return, the system provides
-an authenticity assessment comprising the predicted label (Real or Fake), an associated
-confidence percentage and word-level explainability highlights indicating the linguistic
-basis for the prediction.
-
-The machine learning engineer supplies annotated benchmark datasets, such as WELFake,
-FakeNewsNet and LIAR, for offline model training and fine-tuning. The system outputs
-training convergence metrics, cross-validation performance summaries and loss statistics
-to allow the engineer to monitor model reliability.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=\textwidth,keepaspectratio]{DFD_0.drawio.png}
-  \caption{Data Flow Diagram: Level 0 (Context Diagram)}
-  \label{fig:dfd0}
-\end{figure}
-
-\section{Data Flow Diagram Level 1}
-
-The Data Flow Diagram Level 1 decomposes the unified Ledger system into four modular
-sub-processes, establishing the precise transformation of data from raw user input to
-an explainable prediction.
-
-Process 1.0 (Preprocess Text) receives raw text from the user and applies cleaning,
-tokenization and lemmatization routines. Noise such as extraneous whitespace, HTML tags
-and non-alphanumeric characters is removed to generate normalized token streams.
-
-Process 2.0 (Generate Embeddings) takes the normalized tokens and retrieves corresponding
-subword vector representations from the pre-trained FastText embedding repository. This
-step ensures that out-of-vocabulary terms, typographical errors and internet slang are
-projected into meaningful semantic vector spaces.
-
-Process 3.0 (Classify News) feeds the dense embedding tensors into the trained CNN-LSTM
-neural network. Pre-trained weights stored in the model repository evaluate local
-syntactic patterns and sequential semantic flow, producing class probabilities for the
-Real and Fake categories.
-
-Process 4.0 (Generate Explanation) receives the prediction from the classification
-process and invokes the LIME explainer. By perturbing words within the input sample and
-fitting a localized linear surrogate model, the process calculates positive and negative
-attribution weights for individual tokens. The final package, combining the veracity
-verdict, confidence score and word-level attribution highlights, is transmitted back to
-the user interface.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=\textwidth,keepaspectratio]{DFD_1.drawio.png}
-  \caption{Data Flow Diagram: Level 1}
-  \label{fig:dfd1}
-\end{figure}
-
-\section{UML Sequence Diagram}
+\section{Sequence Diagram}
 
 The UML Sequence Diagram illustrates the chronological message exchange between system
 participants during a complete news verification lifecycle. The diagram models six
@@ -775,6 +1016,176 @@ with a clear authenticity verdict and an interactive highlighted textual explana
     \caption{UML Sequence Diagram}
     \label{fig:sequence}
 \end{figure}
+
+\section{Data Flow Diagram}
+
+A Data Flow Diagram (DFD) provides a graphical representation of the flow of data through an
+information system, tracing the path from external data inputs to processed outputs. DFDs serve
+as a primary analytical tool in structured system design by functionally decomposing complex
+operations into distinct hierarchical levels of abstraction. External entities represent sources or
+destinations of information, directed arrows illustrate data movement pathways, processes depict
+computational or algorithmic transformations applied to data and data stores denote persistent or
+in-memory repositories. In the Ledger architecture, data flow diagrams characterize how submitted
+news articles are ingested from client interfaces, channeled through natural language preprocessing
+and FastText embedding routines, classified by the hybrid neural network and interpreted via LIME
+explanations to deliver accountable authenticity verdicts to end users.
+
+\subsection{Level 0}
+
+The Data Flow Diagram Level 0, also designated as the context diagram, defines the
+system boundary by illustrating the primary interactions between external entities
+and the Ledger system as a single unified process.
+
+Two principal external entities interact with the system: the User (or Fact-Checker)
+and the Machine Learning Engineer (or System Administrator). The user submits unverified
+news text or article headlines to the Ledger system. In return, the system provides
+an authenticity assessment comprising the predicted label (Real or Fake), an associated
+confidence percentage and word-level explainability highlights indicating the linguistic
+basis for the prediction.
+
+The machine learning engineer supplies annotated benchmark datasets, such as WELFake,
+FakeNewsNet and LIAR, for offline model training and fine-tuning. The system outputs
+training convergence metrics, cross-validation performance summaries and loss statistics
+to allow the engineer to monitor model reliability.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth,keepaspectratio]{DFD_0.drawio.png}
+  \caption{Data Flow Diagram: Level 0 (Context Diagram)}
+  \label{fig:dfd0}
+\end{figure}
+
+\subsection{Level 1}
+
+The Data Flow Diagram Level 1 decomposes the unified Ledger system into four modular
+sub-processes, establishing the precise transformation of data from raw user input to
+an explainable prediction.
+
+Process 1.0 (Preprocess Text) receives raw text from the user and applies cleaning,
+tokenization and lemmatization routines. Noise such as extraneous whitespace, HTML tags
+and non-alphanumeric characters is removed to generate normalized token streams.
+
+Process 2.0 (Generate Embeddings) takes the normalized tokens and retrieves corresponding
+subword vector representations from the pre-trained FastText embedding repository. This
+step ensures that out-of-vocabulary terms, typographical errors and internet slang are
+projected into meaningful semantic vector spaces.
+
+Process 3.0 (Classify News) feeds the dense embedding tensors into the trained CNN-LSTM
+neural network. Pre-trained weights stored in the model repository evaluate local
+syntactic patterns and sequential semantic flow, producing class probabilities for the
+Real and Fake categories.
+
+Process 4.0 (Generate Explanation) receives the prediction from the classification
+process and invokes the LIME explainer. By perturbing words within the input sample and
+fitting a localized linear surrogate model, the process calculates positive and negative
+attribution weights for individual tokens. The final package, combining the veracity
+verdict, confidence score and word-level attribution highlights, is transmitted back to
+the user interface.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth,keepaspectratio]{DFD_1.drawio.png}
+  \caption{Data Flow Diagram: Level 1}
+  \label{fig:dfd1}
+\end{figure}
+
+%====================================================================
+\chapter{SOFTWARE AND HARDWARE REQUIREMENT}
+%====================================================================
+
+The implementation and execution of the Ledger fake news detection system depend on specific
+software frameworks, runtime environments and hardware platforms. This chapter outlines the
+complete software and hardware requirements necessary for development, model training, server
+deployment and client access.
+
+\section{Software Requirements}
+
+The software ecosystem comprises machine learning libraries, natural language processing toolkits,
+web application frameworks and developer utilities:
+
+\begin{itemize}[leftmargin=*, itemsep=4pt]
+  \item \textbf{Operating System:} Linux (Ubuntu 22.04 LTS or higher) or Microsoft Windows 10/11
+        (64-bit operating system).
+  \item \textbf{Programming Languages:} Python 3.10 or higher for backend service logic, text
+        preprocessing and machine learning pipelines; JavaScript (ECMAScript 2022+) for interactive
+        frontend components.
+  \item \textbf{Machine Learning Frameworks:} PyTorch 2.0+ or TensorFlow/Keras 2.x for neural
+        network modeling, tensor computations and model serialization.
+  \item \textbf{Natural Language Processing Libraries:} FastText library for extracting
+        300-dimensional subword n-gram embeddings; Natural Language Toolkit (NLTK) and SpaCy for
+        sentence tokenization, regex cleaning, stopword filtering and lemmatization.
+  \item \textbf{Explainable AI (XAI) Framework:} LIME (Local Interpretable Model-agnostic
+        Explanations) toolkit for generating local perturbation instances and calculating token-level
+        feature importance attribution weights.
+  \item \textbf{Backend Framework and Web Server:} Python FastAPI for high-throughput asynchronous
+        RESTful API endpoints; Uvicorn ASGI production server for event-driven concurrency; Pydantic
+        for schema validation and request-response serialization.
+  \item \textbf{Frontend Framework and Tools:} React.js (version 18 or higher) for constructing the
+        single-page user interface; Node.js (version 18 LTS or higher) and npm/yarn for package
+        management; Axios for handling asynchronous HTTP requests.
+  \item \textbf{Development and Collaboration Tools:} Visual Studio Code as the primary integrated
+        development environment (IDE); Google Colab (with cloud GPU acceleration) and Jupyter Notebook
+        for iterative exploratory data analysis and model training; Git and GitHub for distributed
+        version control and repository management.
+  \item \textbf{Benchmark Datasets:} WELFake dataset (comprising 72,134 verified news articles)
+        supplemented by FakeNewsNet and LIAR benchmark corpora for training and comparative evaluation.
+\end{itemize}
+
+\section{Hardware Requirements}
+
+The hardware requirements are categorized into development and model training specifications, server
+hosting specifications and end-user client device requirements.
+
+\subsection{Development and Model Training Requirements}
+
+Model training, embedding extraction and hyperparameter tuning involve computationally demanding matrix
+operations:
+
+\begin{itemize}[leftmargin=*, itemsep=3pt]
+  \item \textbf{Processor (CPU):} Multi-core processor (Intel Core i5/i7 12th Generation or AMD
+        Ryzen 5/7 equivalent, minimum 6 physical cores operating at 2.5\,GHz or higher).
+  \item \textbf{System Memory (RAM):} Minimum 16\,GB DDR4/DDR5 RAM to handle large tokenized text
+        arrays and dataset batches without memory exhaustion.
+  \item \textbf{Storage:} Minimum 50\,GB available Solid State Drive (SSD) storage to accommodate raw
+        and preprocessed datasets, the pre-trained FastText binary model (\texttt{cc.en.300.bin}) and
+        saved neural network checkpoint files.
+  \item \textbf{Graphics Processing Unit (GPU):} Dedicated NVIDIA GPU with minimum 8\,GB VRAM
+        (supporting CUDA and cuDNN) or cloud-hosted NVIDIA Tesla T4 GPU (16\,GB GDDR6 VRAM provided via
+        Google Colab) to accelerate tensor convolutions and recurrent backpropagation passes.
+\end{itemize}
+
+\subsection{Server and Deployment Requirements}
+
+The production server hosts the FastAPI application, loads the trained CNN-LSTM weights and FastText
+matrices into memory and services incoming inference requests:
+
+\begin{itemize}[leftmargin=*, itemsep=3pt]
+  \item \textbf{Processor (CPU):} x86-64 multi-core server processor (minimum 4 cores operating at
+        2.2\,GHz or higher).
+  \item \textbf{System Memory (RAM):} Minimum 8\,GB RAM (16\,GB recommended) to retain embedding
+        vectors and model weights in resident memory for low-latency inference.
+  \item \textbf{Storage:} Minimum 20\,GB available SSD storage for application runtimes, logs and static
+        assets.
+  \item \textbf{Network Interface:} Standard 100/1000\,Mbps Ethernet network adapter with stable
+        high-speed broadband internet connectivity.
+\end{itemize}
+
+\subsection{Client Device Requirements}
+
+The frontend web application is lightweight and offloads all compute-intensive NLP operations to the
+backend API:
+
+\begin{itemize}[leftmargin=*, itemsep=3pt]
+  \item \textbf{Device Type:} Any desktop computer, laptop, tablet or smartphone.
+  \item \textbf{Processor:} Standard dual-core processor (1.5\,GHz or higher).
+  \item \textbf{System Memory (RAM):} Minimum 2\,GB RAM (4\,GB or more recommended for smooth browser
+        operation).
+  \item \textbf{Display Resolution:} Minimum $1024 \times 768$ pixels ($1920 \times 1080$ recommended
+        for optimal visualization of attribution heatmaps).
+  \item \textbf{Web Browser:} Any standards-compliant modern web browser including Google Chrome,
+        Mozilla Firefox, Apple Safari or Microsoft Edge with JavaScript execution enabled.
+  \item \textbf{Network Connectivity:} Active broadband, Wi-Fi or cellular (4G/5G) internet connection.
+\end{itemize}
 
 %====================================================================
 % REFERENCES
