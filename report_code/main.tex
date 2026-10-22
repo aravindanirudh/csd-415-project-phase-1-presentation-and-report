@@ -16,7 +16,7 @@
 %--------------------------------------------------------------------
 \usepackage{graphicx}
 \usepackage{float}
-\graphicspath{{./}{../code/}{../diagrams/}{diagrams/}}
+\graphicspath{{./}{../code/}{../diagrams/}{diagrams/}{screenshots/}{../docs/screenshots/}}
 \usepackage{setspace}
 \usepackage{parskip}
 \usepackage{booktabs}
@@ -1186,6 +1186,237 @@ backend API:
         Mozilla Firefox, Apple Safari or Microsoft Edge with JavaScript execution enabled.
   \item \textbf{Network Connectivity:} Active broadband, Wi-Fi or cellular (4G/5G) internet connection.
 \end{itemize}
+
+%====================================================================
+\chapter{IMPLEMENTATION}
+%====================================================================
+
+The implementation phase translates the theoretical architecture, system design models
+and software requirements into functional software artifacts. In accordance with the
+academic project milestones, the system is currently at the Phase~I interim stage,
+representing approximately 25\,\% overall project completion. Under the prescribed
+interim evaluation guidelines, primary emphasis is placed on delivering a fully functional,
+high-fidelity user interface, an interactive Explainable AI visualization pipeline and an
+autonomous client-side verification engine. This chapter presents the implemented frontend
+prototype, the visual explainability mechanisms, the user interaction workflow and the
+graphical interface results captured across standard evaluation scenarios.
+
+\section{System Overview and Interim Milestone Status}
+
+The Ledger platform is designed as an accessible, text-based fake news detection system
+that pairs deep-learning classification with word-level Explainable AI. At the current
+25\,\% completion milestone, implementation efforts have focused on the presentation
+layer and client-side verification pipeline. This prioritization ensures that news readers,
+journalists and evaluators can immediately interact with the verification workflow, evaluate
+the visual interpretability of predictions and inspect veracity heatmaps prior to backend
+deep-learning model training.
+
+The client-side application is implemented as a responsive Single-Page Application (SPA)
+developed using the React.js framework, Vite build tooling and Tailwind CSS. To enable
+autonomous operation and verification during early evaluation, the frontend incorporates
+a dedicated Mock Verification Engine (\texttt{mockData.js}). This engine simulates the
+inference output of the planned FastText and hybrid CNN-LSTM neural pipeline by supplying
+calibrated veracity predictions and token-level attribution weights derived from verified
+benchmark news corpora. Consequently, the user interface operates as a standalone system
+capable of demonstrating realistic verification scenarios, interactive heatmap rendering
+and feature importance ranking without requiring active backend server dependencies.
+
+\section{Core Implemented Components}
+
+The implemented prototype consists of six modular components integrated within the
+React.js single-page architecture:
+
+\begin{enumerate}[label=\arabic*., leftmargin=*, itemsep=4pt]
+  \item \textbf{Verification Input and Preset Selection Module:}
+        Provides an expansive text area for submitting arbitrary news headlines or full
+        article passages. The component features dynamic character and token counters that
+        monitor submission length in real time. To facilitate rapid demonstration and
+        standardized evaluation, a preset selector allows evaluators to load curated
+        benchmark passages representing verified authentic news, fabricated political claims
+        and health misinformation with a single click. Action controls include an instant
+        verification trigger with animated loading indicators and a text clearing button.
+
+  \item \textbf{Autonomous Mock Verification Engine:}
+        Acts as the client-side data provider during the interim milestone. It encapsulates
+        domain-specific veracity profiles based on verified literature cases, returning
+        binary classification verdicts (\texttt{Authentic News} or \texttt{Deceptive / Fake
+        News}), numerical confidence percentages, class probability distributions and signed
+        LIME token attribution weights.
+
+  \item \textbf{Verdict and Confidence Gauge Card:}
+        Renders the verification outcome through high-contrast visual cues. Authentic news
+        is marked with an emerald green badge and deceptive content is flagged with a
+        prominent crimson red badge. The card incorporates an animated horizontal confidence
+        meter displaying the percentage certainty, a statistical probability breakdown for
+        both classes and execution latency metadata.
+
+  \item \textbf{Explainable AI Heatmap Visualization Component:}
+        Implements an interactive token-level explanation view that renders the submitted
+        article with color-coded background highlights. Words that provide evidence of
+        authenticity are highlighted in green tones, whereas terms associated with deceptive
+        patterns are highlighted in red tones. Highlight intensity scales proportionally
+        with the absolute numerical attribution score. Hovering the cursor over any
+        highlighted word activates an interactive tooltip displaying the exact LIME score
+        alongside a qualitative indicator explaining whether the term supports authenticity
+        or indicates deception.
+
+  \item \textbf{Feature Importance Ranking Component:}
+        Constructs a horizontal bilateral bar chart visualizing the ten most influential
+        words sorted by absolute attribution magnitude. A centered zero-axis delineates the
+        two classes: red bars extend leftward for deceptive keywords and green bars extend
+        rightward for credibility-supporting terms. Numerical attribution values are rendered
+        adjacent to each bar to provide transparent quantitative justifications.
+
+  \item \textbf{Model Specifications and Benchmark Modal:}
+        An educational overlay accessible from the primary navigation bar. It presents the
+        target neural architecture specifications (FastText 300-dimensional embeddings, two
+        1D-CNN layers with kernels 4 and 3, two LSTM layers with 50 and 30 memory units,
+        Dropout and Softmax classification) alongside benchmark classification metrics
+        reported in the base literature across the WELFake, FakeNewsNet and LIAR datasets.
+\end{enumerate}
+
+\section{Operational Verification Workflow}
+
+The operational workflow implemented in the client dashboard follows a four-step
+sequence:
+
+\begin{enumerate}[label=\arabic*., leftmargin=*, itemsep=2pt]
+  \item \textbf{Input Entry:} The user enters unverified news text into the submission
+        area or selects one of the pre-configured benchmark article presets.
+  \item \textbf{Verification Dispatch:} Upon clicking the verification button, the
+        interface validates that the input text contains adequate content, engages an
+        animated loading state and dispatches the payload to the verification engine.
+  \item \textbf{Veracity Evaluation and Rendering:} The verification engine evaluates
+        the text tokens, computes class probabilities and returns the verdict badge,
+        confidence score and token attribution weights.
+  \item \textbf{Interactive Explainability Exploration:} The dashboard renders the
+        color-coded LIME word heatmap and the bilateral feature importance ranking chart.
+        The user can inspect individual tokens using mouse hover tooltips to understand the
+        linguistic basis of the decision.
+\end{enumerate}
+
+\clearpage
+\section{Prototype Walkthrough and Interface Results}
+
+{\setlength{\intextsep}{6pt plus 2pt minus 2pt}
+To demonstrate system functionality at the 25\,\% completion milestone, high-resolution
+graphical screenshots were captured across diverse evaluation states in accordance with the
+project evaluation guidelines.
+
+\subsection{Blank Input Dashboard State}
+
+Figure~\ref{fig:blank_dashboard} illustrates the initial dashboard view prior to executing
+verification. The header displays active model metadata, the hero section outlines the core
+performance targets and the input container provides article preset loaders with real-time
+character counters.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.80\textwidth,keepaspectratio]{01_blank_dashboard.png}
+  \vspace{-0.2cm}
+  \caption{Blank Input Dashboard Interface}
+  \label{fig:blank_dashboard}
+\end{figure}
+
+\subsection{Authentic News Veracity Classification}
+
+Figure~\ref{fig:real_news_verdict} demonstrates the verification of a legitimate political news
+report (Sample~1: Verified Real News). The interface outputs an emerald green \texttt{AUTHENTIC
+NEWS} badge with a 98.6\,\% confidence score and highlights credible anchor words in green tones.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.80\textwidth,keepaspectratio]{02_real_news_verdict.png}
+  \vspace{-0.2cm}
+  \caption{Authentic News Veracity Classification and Attribution Heatmap}
+  \label{fig:real_news_verdict}
+\end{figure}
+
+\clearpage
+
+\subsection{Deceptive / Fake News Veracity Classification}
+
+Figure~\ref{fig:fake_news_verdict} depicts the evaluation of fabricated content (Sample~2:
+Fabricated Fake News). The dashboard displays a crimson red \texttt{DECEPTIVE / FAKE NEWS}
+badge with a 99.2\,\% confidence rating, highlighting sensationalized deception markers in red.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.80\textwidth,keepaspectratio]{03_fake_news_verdict.png}
+  \vspace{-0.2cm}
+  \caption{Fake News Veracity Classification and Keyword Highlighting}
+  \label{fig:fake_news_verdict}
+\end{figure}
+
+\subsection{LIME Attribution Tooltip and Top 10 Feature Importance Chart}
+
+Figure~\ref{fig:feature_importance} demonstrates the Explainable AI attribution mechanisms.
+Hovering over a flagged token reveals its exact LIME score in a tooltip, while the bilateral
+chart ranks the top ten influential words extending left for deceptive cues and right for
+credibility.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.80\textwidth,keepaspectratio]{05_feature_importance_chart.png}
+  \vspace{-0.2cm}
+  \caption{Top 10 Feature Importance Ranking and Attribution Tooltip}
+  \label{fig:feature_importance}
+\end{figure}
+
+\clearpage
+
+\subsection{Model Specifications and Benchmark Modal}
+
+Figure~\ref{fig:model_modal} presents the in-app educational modal accessible from the
+navigation bar. It details target neural pipeline specifications alongside reference benchmark
+metrics across the WELFake (99.0\,\% accuracy), FakeNewsNet (97.0\,\% accuracy) and LIAR
+corpora.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.80\textwidth,keepaspectratio]{06_model_architecture_modal.png}
+  \vspace{-0.2cm}
+  \caption{Model Architecture and Benchmark Metrics Modal}
+  \label{fig:model_modal}
+\end{figure}
+
+\subsection{Mobile Device Responsiveness}
+
+Figure~\ref{fig:mobile_view} demonstrates the responsive design of the prototype on a simulated
+smartphone display. The interface dynamically stacks statistics, preset buttons, input areas and
+verdict cards vertically, maintaining touch accessibility and legible attribution highlights.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.80\textwidth,keepaspectratio]{07_mobile_responsive_view.png}
+  \vspace{-0.2cm}
+  \caption{Mobile Responsive Interface Layout}
+  \label{fig:mobile_view}
+\end{figure}
+}
+
+\clearpage
+
+\section{Technical Setup of the Implemented Prototype}
+
+The prototype application is built on modern web technologies ensuring rapid execution
+and portable deployment:
+
+\begin{itemize}[leftmargin=*, itemsep=3pt]
+  \item \textbf{Client Framework:} React.js (version 18) utilizing functional components,
+        hooks for local state management and modular component architecture.
+  \item \textbf{Build Tooling:} Vite build environment providing instant hot-module
+        replacement (HMR) and optimized static asset compilation.
+  \item \textbf{Styling and Typography:} Tailwind CSS with the official typography plugin
+        for utility-first, responsive layouts and custom semantic color palettes.
+  \item \textbf{Iconography:} Lucide React icon library for visual controls and badges.
+  \item \textbf{Execution Environment:} Node.js 18 LTS runtime executing on commodity
+        development hardware and served locally via \texttt{http://localhost:5173}.
+\end{itemize}
+
+The standalone architecture of the interim prototype operates without external server
+dependencies, enabling immediate local verification, reliable demonstrations and consistent
+graphical evaluation during Phase~I academic assessments.
 
 %====================================================================
 % REFERENCES
