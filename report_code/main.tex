@@ -216,7 +216,7 @@ B.\,Tech. Computer Science and Engineering of APJ Abdul Kalam Technological Univ
 
 \noindent
 \begin{tabular*}{\textwidth}{@{}p{0.33\textwidth}p{0.33\textwidth}p{0.33\textwidth}@{}}
-  \textbf{Guide} & \textbf{Co-ordinator} & \textbf{HOD}\\[0.2cm]
+  \textbf{Guide} & \textbf{Co-ordinator} & \textbf{HOD}\\[1.50cm]
   \textbf{Mrs. Rajeswary R} & \textbf{Mrs. Rakhi R} & \textbf{Dr. Preetha Theresa Joy}\\
   Assistant Professor & Assistant Professor & Professor\\
   Dept. of Computer Science & Dept. of Computer Science & Dept. of Computer Science\\
@@ -1299,9 +1299,6 @@ sequence:
 \section{Prototype Walkthrough and Interface Results}
 
 {\setlength{\intextsep}{6pt plus 2pt minus 2pt}
-To demonstrate system functionality at the 25\,\% completion milestone, high-resolution
-graphical screenshots were captured across diverse evaluation states in accordance with the
-project evaluation guidelines.
 
 \subsection{Blank Input Dashboard State}
 
@@ -1312,7 +1309,7 @@ character counters.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.80\textwidth,keepaspectratio]{01_blank_dashboard.png}
+  \includegraphics[width=1.0\textwidth,keepaspectratio]{01_blank_dashboard.png}
   \vspace{-0.2cm}
   \caption{Blank Input Dashboard Interface}
   \label{fig:blank_dashboard}
@@ -1322,17 +1319,15 @@ character counters.
 
 Figure~\ref{fig:real_news_verdict} demonstrates the verification of a legitimate political news
 report (Sample~1: Verified Real News). The interface outputs an emerald green \texttt{AUTHENTIC
-NEWS} badge with a 98.6\,\% confidence score and highlights credible anchor words in green tones.
+NEWS} badge with a 98.6\,\% confidence score and highlights credible anchor words in green tones below. The number of tokens and characters is also displayed below the text entry box. The confidence percentage for probabilities of both real and fake is also displayed.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.80\textwidth,keepaspectratio]{02_real_news_verdict.png}
+  \includegraphics[width=1.0\textwidth,keepaspectratio]{02_real_news_verdict.png}
   \vspace{-0.2cm}
   \caption{Authentic News Veracity Classification and Attribution Heatmap}
   \label{fig:real_news_verdict}
 \end{figure}
-
-\clearpage
 
 \subsection{Deceptive / Fake News Veracity Classification}
 
@@ -1342,7 +1337,7 @@ badge with a 99.2\,\% confidence rating, highlighting sensationalized deception 
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.80\textwidth,keepaspectratio]{03_fake_news_verdict.png}
+  \includegraphics[width=1.0\textwidth,keepaspectratio]{03_fake_news_verdict.png}
   \vspace{-0.2cm}
   \caption{Fake News Veracity Classification and Keyword Highlighting}
   \label{fig:fake_news_verdict}
@@ -1350,14 +1345,11 @@ badge with a 99.2\,\% confidence rating, highlighting sensationalized deception 
 
 \subsection{LIME Attribution Tooltip and Top 10 Feature Importance Chart}
 
-Figure~\ref{fig:feature_importance} demonstrates the Explainable AI attribution mechanisms.
-Hovering over a flagged token reveals its exact LIME score in a tooltip, while the bilateral
-chart ranks the top ten influential words extending left for deceptive cues and right for
-credibility.
+Figure~\ref{fig:feature_importance} demonstrates the Explainable AI attribution mechanisms. Hovering over a flagged token reveals its exact LIME (Local Interpretable Model-agnostic Explanations) score in a tooltip, revealing its individual attribution score. The bilateral chart ranks the top ten influential words extending left for deceptive cues (negative or fake indication) and right for credibility (positive or real indication).
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.80\textwidth,keepaspectratio]{05_feature_importance_chart.png}
+  \includegraphics[width=1.0\textwidth,keepaspectratio]{05_feature_importance_chart.png}
   \vspace{-0.2cm}
   \caption{Top 10 Feature Importance Ranking and Attribution Tooltip}
   \label{fig:feature_importance}
@@ -1374,7 +1366,7 @@ corpora.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.80\textwidth,keepaspectratio]{06_model_architecture_modal.png}
+  \includegraphics[width=1.0\textwidth,keepaspectratio]{06_model_architecture_modal.png}
   \vspace{-0.2cm}
   \caption{Model Architecture and Benchmark Metrics Modal}
   \label{fig:model_modal}
@@ -1384,11 +1376,11 @@ corpora.
 
 Figure~\ref{fig:mobile_view} demonstrates the responsive design of the prototype on a simulated
 smartphone display. The interface dynamically stacks statistics, preset buttons, input areas and
-verdict cards vertically, maintaining touch accessibility and legible attribution highlights.
+verdict cards vertically, maintaining touch accessibility and legible attribution highlights. It is achieved by creating many CSS breakpoints which dynamically adjust or scale the size of each component so as to fit the display at almost all resolutions - whether it is tablet, smartphone, laptops, computers or any other devices of varying screen resolutions.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.80\textwidth,keepaspectratio]{07_mobile_responsive_view.png}
+  \includegraphics[width=1.0\textwidth,keepaspectratio]{07_mobile_responsive_view.png}
   \vspace{-0.2cm}
   \caption{Mobile Responsive Interface Layout}
   \label{fig:mobile_view}
